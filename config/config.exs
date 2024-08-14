@@ -55,7 +55,7 @@ config :logger,
 
 # configuration for the {LoggerFileBackend, :error_log} backend
 config :logger, :error_log,
-  path: "app.log",
+  path: "log/app.log",
   level: :info
 
 # Use Jason for JSON parsing in Phoenix

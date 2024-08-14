@@ -1,9 +1,14 @@
 defmodule EgunBieterWeb.ErrorJSON do
+  require Logger
   @moduledoc """
   This module is invoked by your endpoint in case of errors on JSON requests.
 
   See config/config.exs.
   """
+
+def render(_, %{conn: %{assigns: %{reason: %EgunBieterWeb.Exceptions.PlugException{message: message}}}}) do
+  %{error: message}
+end
 
   # If you want to customize a particular status code,
   # you may add your own clauses, such as:
