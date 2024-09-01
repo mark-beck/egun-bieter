@@ -29,8 +29,9 @@ defmodule EgunBieterWeb.NewBidController do
   def create(conn, params) do
     Logger.info("creating new article with params: #{inspect(params)}")
     article = EgunApi.get_id(params["id"])
+    {:ok, euro, cent} = EgunBieter.Utils.parse_money(params["max_price"])
     article = Map.merge(article, %{
-      max_price: params["max_price"],
+      max_price: {euro, cent},
       active: false,
       bought: false,
       buy_before: params["buy_before"] |> String.to_integer(),

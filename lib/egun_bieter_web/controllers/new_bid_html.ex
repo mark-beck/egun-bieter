@@ -29,7 +29,7 @@ defmodule EgunBieterWeb.NewBidHTML do
         <%= for {_id, entry} <- @items do %>
           <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
             <td class="p-4 align-middle font-medium"><a href={"/bid/#{entry.id}"}><%= entry.id %></a></td>
-            <td class="p-4 align-middle"><%= entry.max_price %></td>
+            <td class="p-4 align-middle"><%= Enum.join(Tuple.to_list(entry.max_price), ",") %></td>
             <td class="p-4 align-middle"><%= NaiveDateTime.to_string entry.end_time %></td>
             <td class="p-4 align-middle"><%= entry.active %></td>
           </tr>
@@ -88,7 +88,7 @@ defmodule EgunBieterWeb.NewBidHTML do
           </tr>
           <tr>
             <td>Maximaler Betrag</td>
-            <td><%= @article.max_price %>€</td>
+            <td><%= Enum.join(Tuple.to_list(@article.max_price), ",") %> EUR</td>
           </tr>
           <tr>
             <td>Auktionsende</td>
