@@ -63,7 +63,7 @@ defmodule EgunBieter.EgunApi do
     {euros, cents} = article.max_price
     Logger.info("sending bid for id: #{article.id}, amount: #{Enum.join(Tuple.to_list(article.max_price), ",")}")
     res = HTTPoison.post!("https://egun.de/market/bid.php",
-      "id=#{article.id}&action=bid&bid=#{euros}%2C#{cents}&nick=#{article.username}&password=#{article.password}",
+      "id=#{article.id}&action=bid&bid=#{euros}%2C#{cents}&nick=#{URI.encode_www_form(article.username)}&password=#{URI.encode_www_form(article.password)}",
       %{
         "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0",
         "Cookie" => "eGunSettings=a%3A1%3A%7Bs%3A3%3A%22SSL%22%3Bb%3A1%3B%7D; PHPSESSID=49b35c15a699fa70dbd1b3ed0a2e30b1",
