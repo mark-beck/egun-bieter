@@ -1,6 +1,8 @@
 defmodule EgunBieter.Utils do
 
   def parse_money str do
+    str = str |> String.trim
+
     # check for right format
     cond do
       str |> String.graphemes |> Enum.member?(",") and
@@ -15,10 +17,8 @@ defmodule EgunBieter.Utils do
         { :ok, parts |> Enum.at(0), parts |> Enum.at(1) }
       str |> String.graphemes |> Enum.all?(fn e -> Enum.member?(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], e) end) ->
         { :ok, str, "00"}
-      true -> throw "only numbers and , or . allowed"
+      true -> {:err, "only numbers and , or . allowed"}
     end
-  catch
-    m -> {:err, m}
   end
 
   def parse_datetime time_string do
@@ -61,5 +61,11 @@ defmodule EgunBieter.Utils do
       Duration.new!(hour: hour, minute: minute, second: second)
     end
   end
+
+
+  def unwrap_or_raise({:err, message}) do
+    raise(EgunBieterWeb.Exceptions.PlugException, plug_status: 400, message: message)
+  end
+  def unwrap_or_raise(v), do: v
 
 end
