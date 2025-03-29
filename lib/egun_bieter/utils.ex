@@ -3,10 +3,12 @@ defmodule EgunBieter.Utils do
   def parse_money str do
     # check for right format
     cond do
+      str |> String.graphemes |> Enum.member?(",") and
       str |> String.graphemes |> Enum.all?(fn e -> Enum.member?(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ","], e) end) ->
         parts = str |> String.split(",")
         if length(parts) != 2, do: throw "more than 2 parts found"
         { :ok, parts |> Enum.at(0), parts |> Enum.at(1) }
+      str |> String.graphemes |> Enum.member?(".") and
       str |> String.graphemes |> Enum.all?(fn e -> Enum.member?(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."], e) end) ->
         parts = str |> String.split(".")
         if length(parts) != 2, do: throw "more than 2 parts found"
